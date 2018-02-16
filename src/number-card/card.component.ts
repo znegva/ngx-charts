@@ -31,19 +31,21 @@ import { count, decimalChecker } from '../common/count';
         [attr.d]="bandPath"
       />
       <title>{{label}}</title>
-      <svg:text
+      <svg:foreignObject
         class="trimmed-label"
         x="5"
         [attr.x]="textPadding[3]"
         [attr.y]="cardHeight - textPadding[2]"
         [attr.width]="textWidth"
         [attr.height]="labelFontSize + textPadding[2]"
-        alignment-baseline="hanging"
-        [style.fill]="textColor"
-        [style.fontSize.px]="labelFontSize"
-        [style.lineHeight.px]="labelFontSize">
-        {{formattedLabel}}
-      </svg:text>
+        alignment-baseline="hanging">
+        <xhtml:p
+          [style.color]="textColor"
+          [style.fontSize.px]="labelFontSize"
+          [style.lineHeight.px]="labelFontSize"
+          [innerHTML]="formattedLabel">
+        </xhtml:p>
+      </svg:foreignObject>
       <svg:text #textEl
         class="value-text"
         [attr.x]="textPadding[3]"
@@ -93,7 +95,7 @@ export class CardComponent implements OnChanges, OnDestroy {
 
   bandHeight: number = 10;
   transformBand: string;
-  textPadding = [10, 20, 5, 20];
+  textPadding = [10, 20, 15, 20];
   labelFontSize = 15;
 
   bandPath: string;
@@ -118,7 +120,7 @@ export class CardComponent implements OnChanges, OnDestroy {
 
       this.transform = `translate(${this.x} , ${this.y})`;
 
-      this.textWidth = Math.max(0, this.width) - this.textPadding[1] - this.textPadding[3];
+      this.textWidth = Math.max(0, this.width - this.textPadding[1] - this.textPadding[3]);
       this.cardWidth = Math.max(0, this.width);
       this.cardHeight = Math.max(0, this.height);
 
